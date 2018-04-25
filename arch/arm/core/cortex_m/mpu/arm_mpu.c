@@ -35,11 +35,6 @@ static inline u32_t _get_region_attr(u32_t xn, u32_t ap, u32_t tex,
  */
 static inline u32_t _size_to_mpu_rasr_size(u32_t size)
 {
-	/* The minimal supported region size is 32 bytes */
-	if (size <= 32) {
-		return REGION_32B;
-	}
-
 	/*
 	 * A size value greater than 2^31 could not be handled by
 	 * round_up_to_next_power_of_two() properly. We handle
@@ -47,6 +42,12 @@ static inline u32_t _size_to_mpu_rasr_size(u32_t size)
 	 */
 	if (size > (1 << 31)) {
 		return REGION_4G;
+	}
+
+	/* The minimal supported region size as defined by the kconfig */
+	if (size <= CONFIG_MPU_MIN_REGION_SIZE) {
+		return ((32 -
+			 __builtin_clz(CONFIG_MPU_MIN_REGION_SIZE) - 2) << 1);
 	}
 
 	size = 1 << (32 - __builtin_clz(size - 1));

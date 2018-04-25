@@ -44,3 +44,10 @@ config MPU_ALLOW_FLASH_WRITE
 	depends on ARM_MPU || NXP_MPU
 	help
 	  Enable this to allow MPU RWX access to flash memory
+
+config MPU_MIN_REGION_SIZE
+	int "Minimal supported region size"
+	depends on CPU_HAS_MPU
+	default 32
+	help
+	  The minimal supported region size for the MPU

@@ -62,11 +62,15 @@ def main():
         app_ram_size = syms['__app_last_address_used'] - \
             syms['__app_ram_start']
         bit_len = app_ram_size.bit_length()
+        min_region_size = syms['CONFIG_MPU_MIN_REGION_SIZE']
 
     if bit_len:
-        align_size = 1 << bit_len
+        if bit_len < min_region_size:
+            align_size = min_region_size
+        else:
+            align_size = 1 << bit_len
     else:
-        align_size = 32
+        align_size = min_region_size
 
     with open(args.output, "w") as fp:
         fp.write("/***********************************************\n")
