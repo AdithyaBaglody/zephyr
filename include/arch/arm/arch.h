@@ -93,7 +93,7 @@ extern "C" {
  *
  */
 #if defined(CONFIG_MPU_STACK_GUARD)
-#define MPU_GUARD_ALIGN_AND_SIZE	32
+#define MPU_GUARD_ALIGN_AND_SIZE	CONFIG_MPU_MIN_REGION_SIZE
 #else
 #define MPU_GUARD_ALIGN_AND_SIZE	0
 #endif
@@ -129,7 +129,7 @@ extern "C" {
  *
  */
 #if defined(CONFIG_USERSPACE)
-#define STACK_ALIGN    32
+#define STACK_ALIGN    CONFIG_MPU_MIN_REGION_SIZE
 #else
 #define STACK_ALIGN    max(STACK_ALIGN_SIZE, MPU_GUARD_ALIGN_AND_SIZE)
 #endif
