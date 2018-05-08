@@ -10,7 +10,11 @@
 #include <misc/printk.h>
 
 /* size of stack area used by each thread */
+#if (CONFIG_MAIN_STACK_SIZE > 1024)
+#define STACKSIZE CONFIG_MAIN_STACK_SIZE
+#else
 #define STACKSIZE 1024
+#endif
 
 /* scheduling priority used by each thread */
 #define PRIORITY CONFIG_MAIN_THREAD_PRIORITY
@@ -103,21 +107,21 @@ void main(void)
 
 	/* create application threads */
 	k_thread_create(&app_thread_id[0], app_stack[0],
-			K_THREAD_STACK_SIZEOF(app_stack[0]), app_thread,
+			STACKSIZE, app_thread,
 			(void *) 0, NULL, NULL, PRIORITY, 0, K_NO_WAIT);
 
 	printk("add app thread 0 (%p) into app0_domain.\n", &app_thread_id[0]);
 	k_mem_domain_add_thread(&app_domain[0], &app_thread_id[0]);
 
 	k_thread_create(&app_thread_id[1], app_stack[1],
-			K_THREAD_STACK_SIZEOF(app_stack[1]), app_thread,
+			STACKSIZE, app_thread,
 			(void *) 1, NULL, NULL, PRIORITY, 0, K_NO_WAIT);
 
 	printk("add app thread 1 (%p) into app1_domain.\n", &app_thread_id[1]);
 	k_mem_domain_add_thread(&app_domain[1], &app_thread_id[1]);
 
 	k_thread_create(&app_thread_id[2], app_stack[2],
-			K_THREAD_STACK_SIZEOF(app_stack[2]), app_thread,
+			STACKSIZE, app_thread,
 			(void *) 2, NULL, NULL, PRIORITY, 0, K_NO_WAIT);
 
 	printk("add app thread 2 (%p) into app0_domain.\n", &app_thread_id[2]);
