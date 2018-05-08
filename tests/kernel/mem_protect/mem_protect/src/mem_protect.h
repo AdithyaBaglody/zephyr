@@ -27,11 +27,7 @@ extern bool valid_fault;
 
 #if defined(CONFIG_ARM)
 
-#ifdef CONFIG_BOARD_MPS2_AN385
-#define MEM_REGION_ALLOC (1024)
-#else
-#define MEM_REGION_ALLOC (32)
-#endif	/* CONFIG_BOARD_MPS2_AN385 */
+#define MEM_REGION_ALLOC (CONFIG_MPU_MIN_REGION_SIZE)
 
 #elif defined(CONFIG_X86)
 #define MEM_REGION_ALLOC (4096)
@@ -43,7 +39,7 @@ extern bool valid_fault;
 #define MEM_DOMAIN_ALIGNMENT __aligned(MEM_REGION_ALLOC)
 
 /* for kobject.c */
-#ifdef CONFIG_BOARD_MPS2_AN385
+#ifdef CONFIG_BOARD_QEMU_CORTEX_M3
 #define KOBJECT_STACK_SIZE CONFIG_MAIN_STACK_SIZE
 #else
 #define KOBJECT_STACK_SIZE 512
