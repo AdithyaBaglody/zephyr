@@ -35,3 +35,10 @@ config ARC_MPU
 	select MPU_REQUIRES_POWER_OF_TWO_ALIGNMENT if ARC_MPU_VER = 2
 	help
 	  Target has ARC MPU (currently only works for EMSK 2.2/2.3 ARCEM7D)
+
+config MPU_MIN_REGION_SIZE
+	int "Minimal supported region size"
+	depends on CPU_HAS_MPU
+	default 32
+	help
+	  The minimal supported region size for the MPU
