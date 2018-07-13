@@ -36,7 +36,10 @@ struct stack_guard_buffer buf[LAST_THREAD_NUM+1];
 
 u32_t recursive_loop(u32_t counter, int num, void *dummy)
 {
-
+	printk("writing to address 0x20000208\n");
+	*(int *)0x20000208 = 0xDEADBEEF;
+	printk("stack address %x canary %x\n", &buf[num].stack,
+	       &buf[num].canary);
 	if (buf[num].canary != STACK_GUARD_CANARY) {
 		printk("Canary = 0x%08x\tTest not passed.\n", buf[num].canary);
 

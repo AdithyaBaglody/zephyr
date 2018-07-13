@@ -120,7 +120,10 @@ static void _region_init(u32_t index, u32_t region_addr,
 	ARM_MPU_DEV->rbar = (region_addr & MPU_RBAR_ADDR_Msk)
 				| MPU_RBAR_VALID_Msk | index;
 	ARM_MPU_DEV->rasr = region_attr | MPU_RASR_ENABLE_Msk;
-	SYS_LOG_DBG("[%d] 0x%08x 0x%08x", index, region_addr, region_attr);
+	printk(
+	       "mpu region index= [%d] region start_address = 0x%08x attributes = 0x%08x\n",
+	       index,
+	       region_addr, region_attr);
 }
 
 /**

@@ -46,7 +46,6 @@ config TEST_USERSPACE
 config TEST_HW_STACK_PROTECTION
 	bool "Enable hardware-based stack overflow detection if available"
 	depends on ARCH_HAS_STACK_PROTECTION
-	depends on TEST
 	select HW_STACK_PROTECTION
 	default y
 	help
